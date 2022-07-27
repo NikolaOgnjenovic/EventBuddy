@@ -20,7 +20,7 @@ public class EventListViewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return Event.counter;
+        return events.size();
     }
 
     @Override
@@ -39,7 +39,7 @@ public class EventListViewAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.event_list_view_item, container, false);
         }
 
-        ((TextView) convertView.findViewById(R.id.eventTitle)).setText(getItem(position).geteventTitle());
+        ((TextView) convertView.findViewById(R.id.eventTitle)).setText(getItem(position).getEventTitle());
         return convertView;
     }
 }

@@ -2,24 +2,27 @@ package com.mrmi.eventbuddy;
 
 public class Event{
 
-    private String eventTitle;
-    private String eventDescription;
-    private String eventAuthor;
-    private String eventDate;
-    private String eventType;
-    public static int counter = 0;
-    private final int eventId;
+    private final String eventTitle;
+    private final String eventDescription;
+    private final String eventAuthor;
+    private final String eventDate;
+    private final String eventType;
+    private final String eventTime;
+    private final long eventId;
 
-    public Event(String eventTitle, String eventDescription, String eventAuthor, String eventDate, String eventType) {
+
+
+    public Event(String eventTitle, String eventDescription, String eventAuthor, String eventDate, String eventType, String eventTime) {
         this.eventTitle = eventTitle;
         this.eventDescription = eventDescription;
         this.eventAuthor = eventAuthor;
         this.eventDate = eventDate;
         this.eventType = eventType;
-        this.eventId = counter++;
+        this.eventTime = eventTime;
+        this.eventId = System.currentTimeMillis();
     }
 
-    public int getEventId() {
+    public long getEventId() {
         return eventId;
     }
 
@@ -27,39 +30,33 @@ public class Event{
         return eventDescription;
     }
 
-    public void setEventDescription(String eventDescription) {
-        this.eventDescription = eventDescription;
-    }
-
     public String getEventAuthor() {
         return eventAuthor;
-    }
-
-    public void setEventAuthor(String eventAuthor) {
-        this.eventAuthor = eventAuthor;
     }
 
     public String getEventDate() {
         return eventDate;
     }
 
-    public void setEventDate(String eventDate) {
-        this.eventDate = eventDate;
-    }
-
     public String getEventType() {
         return eventType;
     }
 
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
-    }
-
-    public String geteventTitle() {
+    public String getEventTime() {return eventTime;}
+    public String getEventTitle() {
         return eventTitle;
     }
 
-    public void seteventTitle(String eventTitle) {
-        this.eventTitle = eventTitle;
+    @Override
+    public String toString() {
+        return "Event{" +
+                "eventTitle='" + eventTitle + '\'' +
+                ", eventDescription='" + eventDescription + '\'' +
+                ", eventAuthor='" + eventAuthor + '\'' +
+                ", eventDate='" + eventDate + '\'' +
+                ", eventTime='" + eventTime + '\'' +
+                ", eventType='" + eventType + '\'' +
+                ", eventId=" + eventId +
+                '}';
     }
 }

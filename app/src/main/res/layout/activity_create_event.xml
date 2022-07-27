@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".CreateEvent">
+
+    <TextView
+        android:id="@+id/createEventTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/create_event_title"
+        android:textSize="34sp" />
+
+    <EditText
+        android:id="@+id/eventTitleEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/event_title_edit_text"
+        android:inputType="textPersonName"
+        android:textSize="24sp"
+        android:autofillHints="" />
+
+    <EditText
+        android:id="@+id/eventDescriptionEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/event_description_edit_text"
+        android:inputType="textPersonName"
+        android:textSize="24sp"
+        android:autofillHints="" />
+
+
+    <EditText
+        android:id="@+id/eventAuthorEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/event_author_edit_text"
+        android:inputType="textPersonName"
+        android:textSize="24sp"
+        android:autofillHints="" />
+
+    <EditText
+        android:id="@+id/eventTypeEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/event_type_edit_text"
+        android:inputType="textPersonName"
+        android:textSize="24sp"
+        android:autofillHints="" />
+
+    <Button
+        android:id="@+id/eventTimeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/event_time" />
+
+    <Button
+        android:id="@+id/eventDateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/event_date" />
+    <Button
+        android:id="@+id/createEventButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_event" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/back_button" />
+</LinearLayout>

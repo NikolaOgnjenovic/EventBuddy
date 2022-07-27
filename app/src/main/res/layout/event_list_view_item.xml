@@ -10,7 +10,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             app:srcCompat="@android:drawable/btn_star_big_on"
-            android:contentDescription="@string/eventImage" />
+            android:contentDescription="@string/event_image" />
 
         <TextView
             android:id="@+id/eventTitle"
