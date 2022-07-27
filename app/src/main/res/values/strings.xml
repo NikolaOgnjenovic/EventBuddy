@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">EventBuddy</string>
+    <string name="eventImage">Event image</string>
+</resources>
