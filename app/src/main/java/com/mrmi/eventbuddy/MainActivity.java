@@ -2,12 +2,13 @@ package com.mrmi.eventbuddy;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView eventListView;
     private List<Event> eventList;
     private Button createEventButton;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,23 +24,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initialiseViews();
-        initialiseObjects();
-        initialiseAdapters();
         initialiseListeners();
+        loadDatabase();
     }
 
     private void initialiseViews() {
         eventListView = findViewById(R.id.eventListView);
         createEventButton = findViewById(R.id.createEventButton);
-    }
-
-    private void initialiseObjects() {
-        eventList = new ArrayList<>();
-/*
-        eventList.add(new Event("Title 1", "222", "3453", "4343", "431431"));
-        eventList.add(new Event("Title 2", "222", "3453", "4343", "431431"));
-        eventList.add(new Event("Title 3", "222", "3453", "4343", "431431"));
-*/
+        swipeRefreshLayout = findViewById(R.id.refreshLayout);
     }
 
     private void initialiseAdapters() {
@@ -50,5 +43,20 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, CreateEvent.class);
             startActivity(intent);
         });
+
+        swipeRefreshLayout.setOnRefreshListener(
+                () -> {
+                    loadDatabase();
+                    //Explicitly refreshes only once
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+        );
+    }
+
+    private void loadDatabase() {
+        EventDatabase eventDatabase = new EventDatabase();
+        eventList = eventDatabase.getEventList();
+        //initialiseAdapters();
+        new Handler().postDelayed(this::initialiseAdapters, 100);
     }
 }

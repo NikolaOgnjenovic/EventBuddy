@@ -11,4 +11,13 @@
     <string name="event_date">Event date</string>
     <string name="event_time">Event time</string>
     <string name="select_time">Select time</string>
+    <string name="eventTitleToast">Please input the event\'s title</string>
+    <string name="eventDescriptionToast">Please input the event\'s description</string>
+    <string name="eventTypeToast">Please input the event\'s type</string>
+    <string name="eventDateToast">Please input the event\'s date</string>
+    <string name="eventTimeToast">Please input the event\'s time</string>
+    <string name="anonymous_author">Anonymous author</string>
+    <string name="eventCityToast">Please input the event\'s city</string>
+    <string name="event_address_edit_text">Event\'s address</string>
+    <string name="event_city_edit_text">City in which the event is held</string>
 </resources>

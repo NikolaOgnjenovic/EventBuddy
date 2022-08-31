@@ -33,6 +33,26 @@
         android:textSize="24sp"
         android:autofillHints="" />
 
+    <EditText
+        android:id="@+id/eventTypeEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/event_type_edit_text"
+        android:inputType="textPersonName"
+        android:textSize="24sp"
+        android:autofillHints="" />
+
+    <Button
+        android:id="@+id/eventDateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/event_date" />
+
+    <Button
+        android:id="@+id/eventTimeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/event_time" />
 
     <EditText
         android:id="@+id/eventAuthorEditText"
@@ -44,25 +64,23 @@
         android:autofillHints="" />
 
     <EditText
-        android:id="@+id/eventTypeEditText"
+        android:id="@+id/eventAddressEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/event_type_edit_text"
+        android:hint="@string/event_address_edit_text"
         android:inputType="textPersonName"
         android:textSize="24sp"
         android:autofillHints="" />
 
-    <Button
-        android:id="@+id/eventTimeButton"
+    <EditText
+        android:id="@+id/eventCityEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/event_time" />
+        android:hint="@string/event_city_edit_text"
+        android:inputType="textPersonName"
+        android:textSize="24sp"
+        android:autofillHints="" />
 
-    <Button
-        android:id="@+id/eventDateButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/event_date" />
     <Button
         android:id="@+id/createEventButton"
         android:layout_width="wrap_content"

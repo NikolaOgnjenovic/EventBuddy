@@ -1,62 +1,69 @@
 package com.mrmi.eventbuddy;
 
-public class Event{
+public class Event {
 
     private final String eventTitle;
     private final String eventDescription;
-    private final String eventAuthor;
-    private final String eventDate;
     private final String eventType;
+    private final String eventDate;
     private final String eventTime;
-    private final long eventId;
+    private final String eventAuthor;
+    private final String eventId;
+    private final String eventAddress;
+    private final String eventCity;
 
-
-
-    public Event(String eventTitle, String eventDescription, String eventAuthor, String eventDate, String eventType, String eventTime) {
+    public Event(String eventTitle, String eventDescription, String eventType, String eventDate, String eventTime, String eventAuthor, String eventAddress, String eventCity) {
         this.eventTitle = eventTitle;
         this.eventDescription = eventDescription;
-        this.eventAuthor = eventAuthor;
-        this.eventDate = eventDate;
         this.eventType = eventType;
+        this.eventDate = eventDate;
         this.eventTime = eventTime;
-        this.eventId = System.currentTimeMillis();
+        this.eventAuthor = eventAuthor;
+        this.eventId = String.valueOf(System.currentTimeMillis());
+        this.eventAddress = eventAddress;
+        this.eventCity = eventCity;
     }
 
-    public long getEventId() {
-        return eventId;
+    public Event() {
+        this.eventTitle = "";
+        this.eventDescription = "";
+        this.eventType = "";
+        this.eventDate = "";
+        this.eventTime = "";
+        this.eventAuthor = "";
+        this.eventId = String.valueOf(System.currentTimeMillis());
+        this.eventAddress = "";
+        this.eventCity = "";
+    }
+
+    public String getEventTitle() {
+        return eventTitle;
     }
 
     public String getEventDescription() {
         return eventDescription;
     }
 
-    public String getEventAuthor() {
-        return eventAuthor;
+    public String getEventType() {
+        return eventType;
     }
 
     public String getEventDate() {
         return eventDate;
     }
 
-    public String getEventType() {
-        return eventType;
+    public String getEventTime() {
+        return eventTime;
     }
 
-    public String getEventTime() {return eventTime;}
-    public String getEventTitle() {
-        return eventTitle;
+    public String getEventAuthor() {
+        return eventAuthor;
     }
 
-    @Override
-    public String toString() {
-        return "Event{" +
-                "eventTitle='" + eventTitle + '\'' +
-                ", eventDescription='" + eventDescription + '\'' +
-                ", eventAuthor='" + eventAuthor + '\'' +
-                ", eventDate='" + eventDate + '\'' +
-                ", eventTime='" + eventTime + '\'' +
-                ", eventType='" + eventType + '\'' +
-                ", eventId=" + eventId +
-                '}';
+    public String getEventId() {
+        return eventId;
     }
+
+    public String getEventAddress() {return eventAddress;}
+    public String getEventCity() {return eventCity;}
 }
