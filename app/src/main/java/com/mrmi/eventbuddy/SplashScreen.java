@@ -16,7 +16,7 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
 
         //The first data request from firebase always fails for some reason so we're retrieving the list on the splash screen first
-        EventDatabase eventDatabase = new EventDatabase();
+        EventDatabase eventDatabase = new EventDatabase(this);
         List<Event> eventList = eventDatabase.getEventList();
 
         new Handler().postDelayed(() -> {

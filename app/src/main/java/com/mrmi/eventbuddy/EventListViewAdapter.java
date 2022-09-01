@@ -40,19 +40,23 @@ public class EventListViewAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.event_list_view_item, container, false);
         }
 
-        ((TextView) convertView.findViewById(R.id.eventTitle)).setText(getItem(position).getEventTitle());
+        ((TextView) convertView.findViewById(R.id.eventTitle)).setText(getItem(position).getTitle());
 
         convertView.setOnClickListener(v -> {
             Intent intent = new Intent(context, EventActivity.class);
             Event event = events.get(position);
-            intent.putExtra("Event author", event.getEventAuthor());
-            intent.putExtra("Event date", event.getEventDate());
-            intent.putExtra("Event time", event.getEventTime());
-            intent.putExtra("Event type", event.getEventType());
-            intent.putExtra("Event description", event.getEventDescription());
-            intent.putExtra("Event title", event.getEventTitle());
-            intent.putExtra("Event city", event.getEventCity());
-            intent.putExtra("Event address", event.getEventAddress());
+            System.out.println(event.toString());
+            intent.putExtra("author", event.getAuthor());
+            intent.putExtra("date", event.getDate());
+            intent.putExtra("time", event.getTime());
+            intent.putExtra("type", event.getType());
+            intent.putExtra("description", event.getDescription());
+            intent.putExtra("title", event.getTitle());
+            intent.putExtra("city", event.getCity());
+            intent.putExtra("address", event.getAddress());
+            intent.putExtra("interestedCount", event.getInterestedCount());
+            intent.putExtra("goingCount", event.getGoingCount());
+            intent.putExtra("eventID", event.getId());
             context.startActivity(intent);
         });
         return convertView;

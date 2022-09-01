@@ -16,7 +16,7 @@
         android:textSize="34sp" />
 
     <EditText
-        android:id="@+id/eventTitleEditText"
+        android:id="@+id/titleEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/event_title_edit_text"
@@ -25,7 +25,7 @@
         android:autofillHints="" />
 
     <EditText
-        android:id="@+id/eventDescriptionEditText"
+        android:id="@+id/descriptionEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/event_description_edit_text"
@@ -34,7 +34,7 @@
         android:autofillHints="" />
 
     <EditText
-        android:id="@+id/eventTypeEditText"
+        android:id="@+id/typeEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/event_type_edit_text"
@@ -43,19 +43,19 @@
         android:autofillHints="" />
 
     <Button
-        android:id="@+id/eventDateButton"
+        android:id="@+id/dateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/event_date" />
 
     <Button
-        android:id="@+id/eventTimeButton"
+        android:id="@+id/timeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/event_time" />
 
     <EditText
-        android:id="@+id/eventAuthorEditText"
+        android:id="@+id/authorEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/event_author_edit_text"
@@ -64,7 +64,7 @@
         android:autofillHints="" />
 
     <EditText
-        android:id="@+id/eventAddressEditText"
+        android:id="@+id/addressEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/event_address_edit_text"
@@ -73,7 +73,7 @@
         android:autofillHints="" />
 
     <EditText
-        android:id="@+id/eventCityEditText"
+        android:id="@+id/cityEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/event_city_edit_text"

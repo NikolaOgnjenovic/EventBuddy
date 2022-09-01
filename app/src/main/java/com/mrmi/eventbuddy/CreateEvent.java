@@ -15,10 +15,10 @@ import java.util.Calendar;
 
 public class CreateEvent extends AppCompatActivity {
 
-    private Button createEventButton, backButton, eventTimeButton, eventDateButton;
-    private EditText eventTitleEditText, eventDescriptionEditText, eventAuthorEditText, eventTypeEditText, eventAddressEditText, eventCityEditText;
-    private String eventTime = "";
-    private String eventDate = "";
+    private Button createEventButton, backButton, timeButton, dateButton;
+    private EditText titleEditText, descriptionEditText, authorEditText, typeEditText, addressEditText, cityEditText;
+    private String time = "";
+    private String date = "";
     private EventDatabase eventDatabase;
     private Toast toast;
 
@@ -29,52 +29,52 @@ public class CreateEvent extends AppCompatActivity {
         initialiseViews();
         initialiseListeners();
 
-        eventDatabase = new EventDatabase();
+        eventDatabase = new EventDatabase(this);
     }
 
     private void initialiseViews() {
         createEventButton = findViewById(R.id.createEventButton);
         backButton = findViewById(R.id.backButton);
-        eventTitleEditText = findViewById(R.id.eventTitleEditText);
-        eventDescriptionEditText = findViewById(R.id.eventDescriptionEditText);
-        eventTypeEditText = findViewById(R.id.eventTypeEditText);
-        eventTimeButton = findViewById(R.id.eventTimeButton);
-        eventDateButton = findViewById(R.id.eventDateButton);
-        eventAuthorEditText = findViewById(R.id.eventAuthorEditText);
-        eventCityEditText = findViewById(R.id.eventCityEditText);
-        eventAddressEditText = findViewById(R.id.eventAddressEditText);
+        titleEditText = findViewById(R.id.titleEditText);
+        descriptionEditText = findViewById(R.id.descriptionEditText);
+        typeEditText = findViewById(R.id.typeEditText);
+        timeButton = findViewById(R.id.timeButton);
+        dateButton = findViewById(R.id.dateButton);
+        authorEditText = findViewById(R.id.authorEditText);
+        cityEditText = findViewById(R.id.cityEditText);
+        addressEditText = findViewById(R.id.addressEditText);
     }
 
     private void initialiseListeners() {
         createEventButton.setOnClickListener(v -> {
             //Get event data: the title, description, type and author
-            String eventTitle = eventTitleEditText.getText().toString(),
-                    eventDescription = eventDescriptionEditText.getText().toString(),
-                    eventType = eventTypeEditText.getText().toString(),
-                    eventAuthor = eventAuthorEditText.getText().toString(),
-                    eventCity = eventCityEditText.getText().toString(),
-                    eventAddress = eventAddressEditText.getText().toString();
+            String title = titleEditText.getText().toString(),
+                    description = descriptionEditText.getText().toString(),
+                    type = typeEditText.getText().toString(),
+                    author = authorEditText.getText().toString(),
+                    city = cityEditText.getText().toString(),
+                    address = addressEditText.getText().toString();
 
             //If the author input field is empty, set the author value to "anonymous author"
-            if (eventAuthor.equals("")) {
-                eventAuthor = getString(R.string.anonymous_author);
+            if (author.equals("")) {
+                author = getString(R.string.anonymous_author);
             }
 
             //Show toasts which inform the user that they have data they need to input
-            if (eventTitle.equals("")) {
+            if (title.equals("")) {
                 showToast(getString(R.string.eventTitleToast));
-            } else if (eventDescription.equals("")) {
+            } else if (description.equals("")) {
                 showToast(getString(R.string.eventDescriptionToast));
-            } else if (eventType.equals("")) {
+            } else if (type.equals("")) {
                 showToast(getString(R.string.eventTypeToast));
-            } else if (eventDate.equals("")) {
+            } else if (date.equals("")) {
                 showToast(getString(R.string.eventDateToast));
-            } else if (eventTime.equals("")) {
+            } else if (time.equals("")) {
                 showToast(getString(R.string.eventTimeToast));
-            } else if (eventCity.equals("")) {
+            } else if (city.equals("")) {
                 showToast(getString(R.string.eventCityToast));
             } else {
-                Event event = new Event(eventTitle, eventDescription, eventType, eventDate, eventTime, eventAuthor, eventAddress, eventCity);
+                Event event = new Event(title, description, type, date, time, author, address, city);
                 eventDatabase.addEvent(event);
             }
         });
@@ -85,25 +85,25 @@ public class CreateEvent extends AppCompatActivity {
         });
 
         //Display a time picker which sets the event time string's value
-        eventTimeButton.setOnClickListener(v -> {
+        timeButton.setOnClickListener(v -> {
             Calendar currentTime = Calendar.getInstance();
             int hour = currentTime.get(Calendar.HOUR_OF_DAY);
             int minute = currentTime.get(Calendar.MINUTE);
 
             TimePickerDialog timePicker;
-            timePicker = new TimePickerDialog(this, (timePicker1, selectedHour, selectedMinute) -> eventTime = (selectedHour + ":" + selectedMinute), hour, minute, true);
+            timePicker = new TimePickerDialog(this, (timePicker1, selectedHour, selectedMinute) -> time = (selectedHour + ":" + selectedMinute), hour, minute, true);
             timePicker.setTitle(getResources().getString(R.string.select_time));
             timePicker.show();
         });
 
         //Display a date picker which sets the event date string's value
-        eventDateButton.setOnClickListener(v -> {
+        dateButton.setOnClickListener(v -> {
             final Calendar newCalendar = Calendar.getInstance();
             DatePickerDialog datePicker = new DatePickerDialog(this, (view, year, monthOfYear, dayOfMonth) -> {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
 
-                eventDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(newDate.getTime());
+                date = DateFormat.getDateInstance(DateFormat.MEDIUM).format(newDate.getTime());
             }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
             datePicker.show();

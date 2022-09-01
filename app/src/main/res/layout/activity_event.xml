@@ -8,51 +8,63 @@
     tools:context=".EventActivity">
 
     <TextView
-        android:id="@+id/eventTitle"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="34sp" />
 
     <TextView
-        android:id="@+id/eventDescription"
+        android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/eventType"
+        android:id="@+id/type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp" />
 
 
     <TextView
-        android:id="@+id/eventDate"
+        android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/eventTime"
+        android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/eventAuthor"
+        android:id="@+id/author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/eventAddress"
+        android:id="@+id/address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/eventCity"
+        android:id="@+id/city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/interestedCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/goingCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp" />
@@ -62,4 +74,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/back_button" />
+
+    <Button
+        android:id="@+id/interestedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/interested" />
+    <Button
+        android:id="@+id/goingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/going" />
 </LinearLayout>

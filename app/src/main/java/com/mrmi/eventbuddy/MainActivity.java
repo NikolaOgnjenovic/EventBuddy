@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        loadDatabase();
         initialiseViews();
         initialiseListeners();
-        loadDatabase();
     }
 
     private void initialiseViews() {
@@ -54,8 +54,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadDatabase() {
-        EventDatabase eventDatabase = new EventDatabase();
+        EventDatabase eventDatabase = new EventDatabase(this);
         eventList = eventDatabase.getEventList();
+
+        for(Event event : eventList) {
+            System.out.println(event.toString());
+        }
         //initialiseAdapters();
         new Handler().postDelayed(this::initialiseAdapters, 100);
     }

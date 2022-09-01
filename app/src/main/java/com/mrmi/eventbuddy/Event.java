@@ -2,68 +2,89 @@ package com.mrmi.eventbuddy;
 
 public class Event {
 
-    private final String eventTitle;
-    private final String eventDescription;
-    private final String eventType;
-    private final String eventDate;
-    private final String eventTime;
-    private final String eventAuthor;
-    private final String eventId;
-    private final String eventAddress;
-    private final String eventCity;
+    private final String title;
+    private final String description;
+    private final String type;
+    private final String date;
+    private final String time;
+    private final String author;
+    private final String id;
+    private final String address;
+    private final String city;
+    private final String interestedCount;
+    private final String goingCount;
 
-    public Event(String eventTitle, String eventDescription, String eventType, String eventDate, String eventTime, String eventAuthor, String eventAddress, String eventCity) {
-        this.eventTitle = eventTitle;
-        this.eventDescription = eventDescription;
-        this.eventType = eventType;
-        this.eventDate = eventDate;
-        this.eventTime = eventTime;
-        this.eventAuthor = eventAuthor;
-        this.eventId = String.valueOf(System.currentTimeMillis());
-        this.eventAddress = eventAddress;
-        this.eventCity = eventCity;
+    //Counts and the id are also stored as strings because the realtime database parser doesn't auto convert strings to ints
+    public Event(String title, String description, String type, String date, String time, String author, String address, String city) {
+        this.title = title;
+        this.description = description;
+        this.type = type;
+        this.date = date;
+        this.time = time;
+        this.author = author;
+        this.id = String.valueOf(System.currentTimeMillis());
+        this.address = address;
+        this.city = city;
+        this.interestedCount = "0";
+        this.goingCount = "0";
     }
 
+    //Firebase's realtime database requires a no-argument constructor
     public Event() {
-        this.eventTitle = "";
-        this.eventDescription = "";
-        this.eventType = "";
-        this.eventDate = "";
-        this.eventTime = "";
-        this.eventAuthor = "";
-        this.eventId = String.valueOf(System.currentTimeMillis());
-        this.eventAddress = "";
-        this.eventCity = "";
+        this.title = "";
+        this.description = "";
+        this.type = "";
+        this.date = "";
+        this.time = "";
+        this.author = "";
+        this.id = String.valueOf(System.currentTimeMillis());
+        this.address = "";
+        this.city = "";
+        this.interestedCount = "0";
+        this.goingCount = "0";
     }
 
-    public String getEventTitle() {
-        return eventTitle;
+    public String getTitle() {
+        return title;
     }
 
-    public String getEventDescription() {
-        return eventDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public String getEventType() {
-        return eventType;
+    public String getType() {
+        return type;
     }
 
-    public String getEventDate() {
-        return eventDate;
+    public String getDate() {
+        return date;
     }
 
-    public String getEventTime() {
-        return eventTime;
+    public String getTime() {
+        return time;
     }
 
-    public String getEventAuthor() {
-        return eventAuthor;
+    public String getAuthor() {
+        return author;
     }
 
-    public String getEventId() {
-        return eventId;
+    public String getId() {
+        return id;
     }
 
-    public String getEventAddress() {return eventAddress;}
-    public String getEventCity() {return eventCity;}
+    public String getAddress() {
+        return address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getInterestedCount() {
+        return interestedCount;
+    }
+
+    public String getGoingCount() {
+        return goingCount;
+    }
 }

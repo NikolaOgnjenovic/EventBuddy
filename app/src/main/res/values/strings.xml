@@ -20,4 +20,6 @@
     <string name="eventCityToast">Please input the event\'s city</string>
     <string name="event_address_edit_text">Event\'s address</string>
     <string name="event_city_edit_text">City in which the event is held</string>
+    <string name="interested">Interested:</string>
+    <string name="going">Going:</string>
 </resources>
