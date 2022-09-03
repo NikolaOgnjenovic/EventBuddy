@@ -1,72 +1,77 @@
 package com.mrmi.eventbuddy;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class UserDatabase {
-
-    private Set<String> interestedEventIDs, goingEventIDs, createdEventIDs;
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor sharedPreferencesEditor;
+    private final Preferences preferences;
 
     public UserDatabase(Context context) {
-        initialise(context);
-    }
-
-    public void initialise(Context context) {
-        sharedPreferences = context.getSharedPreferences("eventBuddySharedPreferences", Context.MODE_PRIVATE);
-        sharedPreferencesEditor = sharedPreferences.edit();
+        preferences = new Preferences(context);
     }
 
     public Set<String> getInterestedEventIDs() {
-        return sharedPreferences.getStringSet("interestedEventIDs", new HashSet<>());
+        return preferences.getStringSet("interestedEventIDs");
     }
 
     public Set<String> getGoingEventIDs() {
-        return sharedPreferences.getStringSet("goingEventIDs", new HashSet<>());
+        return preferences.getStringSet("goingEventIDs");
 
     }
 
     public Set<String> getCreatedEventIDs() {
-        return sharedPreferences.getStringSet("createdEventIDs", new HashSet<>());
+        return preferences.getStringSet("createdEventIDs");
     }
 
     public void addInterestedEventID(String eventID) {
-        interestedEventIDs = getInterestedEventIDs();
-        interestedEventIDs.add(eventID);
-        sharedPreferencesEditor.putStringSet("interestedEventIDs", interestedEventIDs).apply();
+       preferences.addStringToSet("interestedEventIDs", eventID);
     }
 
     public void addGoingEventID(String eventID) {
-        goingEventIDs = getInterestedEventIDs();
-        goingEventIDs.add(eventID);
-        sharedPreferencesEditor.putStringSet("goingEventIDs", goingEventIDs).apply();
+        preferences.addStringToSet("goingEventIDs", eventID);
     }
 
     public void addCreatedEventID(String eventID) {
-        createdEventIDs = getInterestedEventIDs();
-        createdEventIDs.add(eventID);
-        sharedPreferencesEditor.putStringSet("createdEventIDs", createdEventIDs).apply();
+        preferences.addStringToSet("createdEventIDs", eventID);
     }
 
     public void removeInterestedEventID(String eventID) {
-        interestedEventIDs = getInterestedEventIDs();
-        interestedEventIDs.remove(eventID);
-        sharedPreferencesEditor.putStringSet("interestedEventIDs", interestedEventIDs).apply();
+        preferences.removeStringFromSet("interestedEventIDs", eventID);
     }
 
     public void removeGoingEventID(String eventID) {
-        goingEventIDs = getInterestedEventIDs();
-        goingEventIDs.remove(eventID);
-        sharedPreferencesEditor.putStringSet("goingEventIDs", goingEventIDs).apply();
+        preferences.removeStringFromSet("goingEventIDs", eventID);
     }
 
     public void removeCreatedEventID(String eventID) {
-        createdEventIDs = getInterestedEventIDs();
-        createdEventIDs.remove(eventID);
-        sharedPreferencesEditor.putStringSet("createdEventIDs", createdEventIDs).apply();
+        preferences.removeStringFromSet("createdEventIDs", eventID);
+    }
+
+    public void removeEvent(String eventID) {
+        removeInterestedEventID(eventID);
+        removeGoingEventID(eventID);
+        removeCreatedEventID(eventID);
+    }
+
+    //Returns true if the current user has created the event with the id eventID
+    public boolean userCreatedEvent(String eventID) {
+        return getCreatedEventIDs().contains(eventID);
+    }
+
+    public void updateEventChildCount(String eventID, String eventChildName, boolean shouldAddEvent) {
+        if(shouldAddEvent) {
+            if(eventChildName.equals("interestedCount")) {
+                addInterestedEventID(eventID);
+            } else {
+                addGoingEventID(eventID);
+            }
+        } else {
+            if(eventChildName.equals("interestedCount")) {
+                removeInterestedEventID(eventID);
+            } else {
+                removeGoingEventID(eventID);
+            }
+        }
     }
 }

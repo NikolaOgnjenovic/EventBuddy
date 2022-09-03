@@ -22,4 +22,5 @@
     <string name="event_city_edit_text">City in which the event is held</string>
     <string name="interested">Interested:</string>
     <string name="going">Going:</string>
+    <string name="delete">Delete event</string>
 </resources>

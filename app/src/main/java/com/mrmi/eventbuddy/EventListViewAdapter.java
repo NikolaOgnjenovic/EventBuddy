@@ -14,6 +14,7 @@ public class EventListViewAdapter extends BaseAdapter {
 
     private final Context context;
     private final List<Event> events;
+
     public EventListViewAdapter(Context context, List<Event> events) {
         this.context = context;
         this.events = events;

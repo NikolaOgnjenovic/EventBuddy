@@ -6,8 +6,6 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.List;
-
 public class SplashScreen extends AppCompatActivity {
 
     @Override
@@ -15,14 +13,12 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        //The first data request from firebase always fails for some reason so we're retrieving the list on the splash screen first
-        EventDatabase eventDatabase = new EventDatabase(this);
-        List<Event> eventList = eventDatabase.getEventList();
+        EventDatabase.loadEventList();
 
         new Handler().postDelayed(() -> {
             Intent intent = new Intent(SplashScreen.this, MainActivity.class);
             startActivity(intent);
             finish();
-        }, 3 * 1000);
+        }, 2000);
     }
 }

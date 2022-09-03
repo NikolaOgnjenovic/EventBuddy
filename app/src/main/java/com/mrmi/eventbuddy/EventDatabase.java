@@ -1,7 +1,5 @@
 package com.mrmi.eventbuddy;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -17,17 +15,14 @@ import java.util.Objects;
 
 public class EventDatabase {
 
-    private DatabaseReference databaseReference;
-    private UserDatabase userDatabase;
-    private final Context context;
+    private static DatabaseReference databaseReference = null;
+    public static final List<Event> eventList = new ArrayList<>();
 
-    public EventDatabase(Context c)
-    {
-        context = c;
+    public static void addEvent(Event event) {
+        System.out.println("[MRMI]: EVENT DATABASE: ADDING EVENT");
+
         initialiseDatabase();
-    }
 
-    public void addEvent(Event event) {
         HashMap<String, String> eventMap = new HashMap<>();
         eventMap.put("title", event.getTitle());
         eventMap.put("description", event.getDescription());
@@ -42,14 +37,15 @@ public class EventDatabase {
         eventMap.put("goingCount", event.getGoingCount());
 
         databaseReference.child(event.getId()).setValue(eventMap);
-        //databaseReference.push().setValue(eventMap);
-        System.out.println("Added event to database");
     }
 
-    public List<Event> getEventList() {
-        List<Event> eventList = new ArrayList<>();
+    public static void loadEventList() {
+        System.out.println("[MRMI]: EVENT DATABASE: LOADING EVENT LIST");
 
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        initialiseDatabase();
+
+        eventList.clear();
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
@@ -61,16 +57,17 @@ public class EventDatabase {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-
-        return eventList;
     }
 
     //Change count of an event's property (input event ID, the name of the property - eventInterstedCount/eventGoingCount and the amount (+1 or -1)
-    public void changeEventPropertyCount(String eventID, String eventPropertyName, boolean increaseValue) {
-        DatabaseReference eventReference = databaseReference.child(eventID).child(eventPropertyName);
+    public static void updateEventChildCount(String eventID, String eventChildName, boolean shouldIncrement) {
+        System.out.println("[MRMI]: EVENT DATABASE: UPDATING CHILD COUNT");
 
-        changeUserDatabase(eventID, eventPropertyName, increaseValue);
-        int amount = (increaseValue) ? 1 : -1;
+        initialiseDatabase();
+
+        DatabaseReference eventReference = databaseReference.child(eventID).child(eventChildName);
+
+        int amount = (shouldIncrement) ? 1 : -1;
         eventReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -83,25 +80,18 @@ public class EventDatabase {
             }
         });
     }
-    private void changeUserDatabase(String eventID, String eventPropertyName, boolean increaseValue) {
-        if(increaseValue) {
-            if(eventPropertyName.equals("interestedCount")) {
-                userDatabase.addInterestedEventID(eventID);
-            } else {
-                userDatabase.addGoingEventID(eventID);
-            }
-        } else {
-            if(eventPropertyName.equals("interestedCount")) {
-                userDatabase.removeInterestedEventID(eventID);
-            } else {
-                userDatabase.removeGoingEventID(eventID);
-            }
-        }
+
+    public static void removeEvent(String eventID) {
+        initialiseDatabase();
+        System.out.println("[MRMI]: EVENT DATABASE: REMOVING CHILD");
+        databaseReference.child(eventID).removeValue();
     }
 
-    private void initialiseDatabase() {
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://eventbuddy-bacb3-default-rtdb.europe-west1.firebasedatabase.app/");
-        databaseReference = firebaseDatabase.getReference().child("Events");
-        userDatabase = new UserDatabase(context);
+    private static void initialiseDatabase() {
+        if (databaseReference == null) {
+            System.out.println("[MRMI]: EVENT DATABASE: INITIALISING DATABASE");
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://eventbuddy-bacb3-default-rtdb.europe-west1.firebasedatabase.app/");
+            databaseReference = firebaseDatabase.getReference().child("Events");
+        }
     }
 }

@@ -9,23 +9,33 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
 
     private ListView eventListView;
-    private List<Event> eventList;
     private Button createEventButton;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private EventListViewAdapter eventAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        loadDatabase();
         initialiseViews();
         initialiseListeners();
+        initialiseAdapters();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        loadDatabase();
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 
     private void initialiseViews() {
@@ -35,7 +45,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initialiseAdapters() {
-        eventListView.setAdapter(new EventListViewAdapter(this, eventList));
+        eventAdapter = new EventListViewAdapter(this, EventDatabase.eventList);
+
+        eventListView.setAdapter(eventAdapter);
     }
 
     private void initialiseListeners() {
@@ -54,13 +66,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadDatabase() {
-        EventDatabase eventDatabase = new EventDatabase(this);
-        eventList = eventDatabase.getEventList();
+        EventDatabase.loadEventList();
+        new Handler().postDelayed(this::notifyAdapter, 200);
 
-        for(Event event : eventList) {
-            System.out.println(event.toString());
-        }
-        //initialiseAdapters();
-        new Handler().postDelayed(this::initialiseAdapters, 100);
+    }
+
+    private void notifyAdapter() {
+        eventAdapter.notifyDataSetChanged();
     }
 }

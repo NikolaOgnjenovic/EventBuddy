@@ -19,7 +19,7 @@ public class CreateEvent extends AppCompatActivity {
     private EditText titleEditText, descriptionEditText, authorEditText, typeEditText, addressEditText, cityEditText;
     private String time = "";
     private String date = "";
-    private EventDatabase eventDatabase;
+    private UserDatabase userDatabase;
     private Toast toast;
 
     @Override
@@ -29,7 +29,7 @@ public class CreateEvent extends AppCompatActivity {
         initialiseViews();
         initialiseListeners();
 
-        eventDatabase = new EventDatabase(this);
+        userDatabase = new UserDatabase(this);
     }
 
     private void initialiseViews() {
@@ -75,7 +75,8 @@ public class CreateEvent extends AppCompatActivity {
                 showToast(getString(R.string.eventCityToast));
             } else {
                 Event event = new Event(title, description, type, date, time, author, address, city);
-                eventDatabase.addEvent(event);
+                EventDatabase.addEvent(event);
+                userDatabase.addCreatedEventID(event.getId());
             }
         });
 

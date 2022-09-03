@@ -9,17 +9,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class EventActivity extends AppCompatActivity {
 
-    private Button backButton, interestedButton, goingButton;
-    private EventDatabase eventDatabase;
+    private Button backButton, interestedButton, goingButton, deleteButton;
     private UserDatabase userDatabase;
     private String eventID;
+    private TextView goingCount, interestedCount;
+    private int goingCounter, interestedCounter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
-        eventDatabase = new EventDatabase(this);
         userDatabase = new UserDatabase(this);
         eventID = getIntent().getStringExtra("eventID");
         initialiseViews();
@@ -43,16 +43,22 @@ public class EventActivity extends AppCompatActivity {
         city.setText(getIntent().getStringExtra("city"));
         TextView address = findViewById(R.id.address);
         address.setText(getIntent().getStringExtra("address"));
-        TextView interestedCount = findViewById(R.id.interestedCount);
-        String interestedText = getString(R.string.interested) + " " + getIntent().getStringExtra("interestedCount");
+        interestedCount = findViewById(R.id.interestedCount);
+        interestedCounter = Integer.parseInt(getIntent().getStringExtra("interestedCount"));
+        String interestedText = getString(R.string.interested) + " " + interestedCounter;/* getIntent().getStringExtra("interestedCount"*/
         interestedCount.setText(interestedText);
-        TextView goingCount = findViewById(R.id.goingCount);
-        String goingText = getString(R.string.going) + " " + getIntent().getStringExtra("goingCount");
+        goingCount = findViewById(R.id.goingCount);
+        goingCounter = Integer.parseInt(getIntent().getStringExtra("goingCount"));
+        String goingText = getString(R.string.going) + " " + goingCounter;
         goingCount.setText(goingText);
 
         backButton = findViewById(R.id.backButton);
         interestedButton = findViewById(R.id.interestedButton);
         goingButton = findViewById(R.id.goingButton);
+
+        if(userDatabase.userCreatedEvent(eventID)) {
+            deleteButton = findViewById(R.id.deleteButton);
+        }
     }
 
     private void initialiseListeners() {
@@ -61,14 +67,52 @@ public class EventActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        interestedButton.setOnClickListener(v -> eventDatabase.changeEventPropertyCount(eventID, "interestedCount", !interestedInEvent(eventID)));
-        goingButton.setOnClickListener(v -> eventDatabase.changeEventPropertyCount(eventID, "goingCount", !goingToEvent(eventID)));
+        interestedButton.setOnClickListener(v -> {
+            //Change the count of the event's interested users in the database
+            EventDatabase.updateEventChildCount(eventID, "interestedCount", !interestedInEvent(eventID));
+            userDatabase.updateEventChildCount(eventID, "interestedCount", !interestedInEvent(eventID));
+
+            //If the user is now interested in the event, increment the counter. Otherwise decrease it
+            if(interestedInEvent(eventID)) {
+                ++interestedCounter;
+            } else {
+                --interestedCounter;
+            }
+            //Display the refreshed counter. Cheeky workaround instead of accessing the database twice each click
+            String interestedText = getString(R.string.interested) + " " + interestedCounter;
+            interestedCount.setText(interestedText);
+        });
+        goingButton.setOnClickListener(v -> {
+            //Change the count of the event's going users in the database
+            EventDatabase.updateEventChildCount(eventID, "goingCount", !goingToEvent(eventID));
+            userDatabase.updateEventChildCount(eventID, "goingCount", !goingToEvent(eventID));
+
+            //If the user is now interested in the event, increment the counter. Otherwise decrease it
+            if(goingToEvent(eventID)) {
+                ++goingCounter;
+            } else {
+                --goingCounter;
+            }
+            //Display the refreshed counter. Cheeky workaround instead of accessing the database twice each click
+            String goingText = getString(R.string.going) + " " + goingCounter;
+            goingCount.setText(goingText);
+        });
+
+        if(userDatabase.userCreatedEvent(eventID)) {
+            deleteButton.setOnClickListener(v -> {
+                EventDatabase.removeEvent(eventID);
+                userDatabase.removeEvent(eventID);
+                startActivity(new Intent(EventActivity.this, MainActivity.class));
+            });
+        }
     }
 
+    //Returns true if the event's ID IS contained in the interestedEventIDs set
     private boolean interestedInEvent(String eventID) {
         return userDatabase.getInterestedEventIDs().contains(eventID);
     }
 
+    //Returns true if the event's ID IS contained in the goingEventIDs set
     private boolean goingToEvent(String eventID) {
         return userDatabase.getGoingEventIDs().contains(eventID);
     }
