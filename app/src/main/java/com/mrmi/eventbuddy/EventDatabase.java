@@ -39,17 +39,19 @@ public class EventDatabase {
         databaseReference.child(event.getId()).setValue(eventMap);
     }
 
-    public static void loadEventList() {
+    public static void loadEventList(DatabaseCallback databaseCallback) {
         System.out.println("[MRMI]: EVENT DATABASE: LOADING EVENT LIST");
 
         initialiseDatabase();
 
         eventList.clear();
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     eventList.add(dataSnapshot1.getValue(Event.class));
+                    databaseCallback.onCallback();
                 }
             }
 

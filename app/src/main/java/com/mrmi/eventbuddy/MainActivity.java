@@ -2,7 +2,6 @@ package com.mrmi.eventbuddy;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -66,12 +65,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadDatabase() {
-        EventDatabase.loadEventList();
-        new Handler().postDelayed(this::notifyAdapter, 200);
-
-    }
-
-    private void notifyAdapter() {
-        eventAdapter.notifyDataSetChanged();
+        EventDatabase.loadEventList(() -> eventAdapter.notifyDataSetChanged());
     }
 }
