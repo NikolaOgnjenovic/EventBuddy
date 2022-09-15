@@ -8,6 +8,8 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.1388888888888889" />
         <entry key="app/src/main/res/layout/event_list_view_item.xml" value="0.27717391304347827" />
+        <entry key="app/src/main/res/menu/menu_search.xml" value="0.3151041666666667" />
+        <entry key="app/src/main/res/xml/searchable.xml" value="0.36325301204819277" />
       </map>
     </option>
   </component>
@@ -16,5 +18,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.27717391304347827" />
+      </ProjectState>
+    </option>
   </component>
 </project>

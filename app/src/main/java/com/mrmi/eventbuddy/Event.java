@@ -1,6 +1,6 @@
 package com.mrmi.eventbuddy;
 
-public class Event {
+class Event{
 
     private final String title;
     private final String description;

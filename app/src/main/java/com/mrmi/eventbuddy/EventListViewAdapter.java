@@ -5,34 +5,18 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.List;
 
-public class EventListViewAdapter extends BaseAdapter {
+public class EventListViewAdapter extends ArrayAdapter<Event> {
 
     private final Context context;
-    private final List<Event> events;
 
-    public EventListViewAdapter(Context context, List<Event> events) {
+    public EventListViewAdapter(Context context, int resource, List<Event> eventList) {
+        super(context, resource, eventList);
         this.context = context;
-        this.events = events;
-    }
-
-    @Override
-    public int getCount() {
-        return events.size();
-    }
-
-    @Override
-    public Event getItem(int i) {
-        return this.events.get(i);
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return 0;
     }
 
     @Override
@@ -40,12 +24,11 @@ public class EventListViewAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.event_list_view_item, container, false);
         }
-
+        Event event = getItem(position);
         ((TextView) convertView.findViewById(R.id.eventTitle)).setText(getItem(position).getTitle());
 
         convertView.setOnClickListener(v -> {
             Intent intent = new Intent(context, EventActivity.class);
-            Event event = events.get(position);
             System.out.println(event.toString());
             intent.putExtra("author", event.getAuthor());
             intent.putExtra("date", event.getDate());
@@ -58,6 +41,7 @@ public class EventListViewAdapter extends BaseAdapter {
             intent.putExtra("interestedCount", event.getInterestedCount());
             intent.putExtra("goingCount", event.getGoingCount());
             intent.putExtra("eventID", event.getId());
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         });
         return convertView;

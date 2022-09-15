@@ -2,6 +2,7 @@ package com.mrmi.eventbuddy;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -55,9 +56,11 @@ public class EventActivity extends AppCompatActivity {
         backButton = findViewById(R.id.backButton);
         interestedButton = findViewById(R.id.interestedButton);
         goingButton = findViewById(R.id.goingButton);
+        deleteButton = findViewById(R.id.deleteButton);
+        deleteButton.setVisibility(View.INVISIBLE);
 
         if(userDatabase.userCreatedEvent(eventID)) {
-            deleteButton = findViewById(R.id.deleteButton);
+            deleteButton.setVisibility(View.VISIBLE);
         }
     }
 
