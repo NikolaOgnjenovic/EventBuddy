@@ -4,8 +4,10 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,11 +18,12 @@ import java.util.Calendar;
 public class CreateEvent extends AppCompatActivity {
 
     private Button createEventButton, backButton, timeButton, dateButton;
-    private EditText titleEditText, descriptionEditText, authorEditText, typeEditText, addressEditText, cityEditText;
+    private EditText titleEditText, descriptionEditText, authorEditText, addressEditText, cityEditText;
     private String time = "";
     private String date = "";
     private UserDatabase userDatabase;
     private Toast toast;
+    private Spinner eventTypeSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,7 @@ public class CreateEvent extends AppCompatActivity {
         setContentView(R.layout.activity_create_event);
         initialiseViews();
         initialiseListeners();
+        initialiseAdapters();
 
         userDatabase = new UserDatabase(this);
     }
@@ -37,7 +41,7 @@ public class CreateEvent extends AppCompatActivity {
         backButton = findViewById(R.id.backButton);
         titleEditText = findViewById(R.id.titleEditText);
         descriptionEditText = findViewById(R.id.descriptionEditText);
-        typeEditText = findViewById(R.id.typeEditText);
+        eventTypeSpinner = findViewById(R.id.eventTypeSpinner);
         timeButton = findViewById(R.id.timeButton);
         dateButton = findViewById(R.id.dateButton);
         authorEditText = findViewById(R.id.authorEditText);
@@ -45,12 +49,18 @@ public class CreateEvent extends AppCompatActivity {
         addressEditText = findViewById(R.id.addressEditText);
     }
 
+    private void initialiseAdapters() {
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.eventTypes,android.R.layout.simple_spinner_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        eventTypeSpinner.setAdapter(spinnerAdapter);
+    }
+
     private void initialiseListeners() {
         createEventButton.setOnClickListener(v -> {
             //Get event data: the title, description, type and author
             String title = titleEditText.getText().toString(),
                     description = descriptionEditText.getText().toString(),
-                    type = typeEditText.getText().toString(),
+                    type = eventTypeSpinner.getSelectedItem().toString(),
                     author = authorEditText.getText().toString(),
                     city = cityEditText.getText().toString(),
                     address = addressEditText.getText().toString();

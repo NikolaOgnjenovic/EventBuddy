@@ -11,6 +11,5 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:textSize="26sp"
-            android:gravity="center_vertical"
-            app:drawableStartCompat="@android:drawable/btn_star_big_on" />
+            android:gravity="center_vertical" />
 </LinearLayout>

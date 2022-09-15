@@ -18,6 +18,11 @@
             android:layout_height="wrap_content"
             android:id="@+id/searchView"
             app:queryHint="@string/search_event_hint" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/eventTypeSpinner" />
         <Button
             android:id="@+id/createEventButton"
             android:layout_width="wrap_content"

@@ -25,4 +25,19 @@
     <string name="delete">Delete event</string>
     <string name="hint_search">Search</string>
     <string name="search_event_hint">Search events by title</string>
+    <string-array name="eventTypes">
+        <item>Party</item>
+        <item>Concert</item>
+        <item>Fundraiser</item>
+        <item>Public speech</item>
+        <item>Protest</item>
+    </string-array>
+    <string-array name="eventFilters">
+        <item>All</item>
+        <item>Party</item>
+        <item>Concert</item>
+        <item>Fundraiser</item>
+        <item>Public speech</item>
+        <item>Protest</item>
+    </string-array>
 </resources>
