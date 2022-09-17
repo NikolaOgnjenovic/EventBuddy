@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -12,18 +13,28 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class CreateEvent extends AppCompatActivity {
 
     private Button createEventButton, backButton, timeButton, dateButton;
-    private EditText titleEditText, descriptionEditText, authorEditText, addressEditText, cityEditText;
+    private EditText titleEditText, descriptionEditText, authorEditText, addressEditText;
     private String time = "";
     private String date = "";
     private UserDatabase userDatabase;
     private Toast toast;
     private Spinner eventTypeSpinner;
+    private List<String> cities = new ArrayList<>();
+    private AutoCompleteTextView cityText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +45,37 @@ public class CreateEvent extends AppCompatActivity {
         initialiseAdapters();
 
         userDatabase = new UserDatabase(this);
+
+        try {
+            //JSONArray: [{JSONObject}, {JSONObject},...]
+            JSONArray database = new JSONArray(readJSONFromAsset());
+            int databaseLength = database.length();
+            for(int i=0; i < databaseLength; ++i) {
+                JSONObject entry = database.getJSONObject(i);
+                    cities.add(entry.getString("name"));
+            }
+        } catch (JSONException jsonException) {
+            jsonException.printStackTrace();
+        }
+    }
+
+    //CITIES OF THE WORLD HAVE BEEN TAKEN FROM https://datahub.io/core/world-cities#data-cli
+    //The credit goes to https://github.com/lexman and https://okfn.org/
+    //A huge thank you to them for allowing others to freely use this valuable data
+    private String readJSONFromAsset() {
+        String json;
+        try {
+            InputStream is = getAssets().open("cities.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
     }
 
     private void initialiseViews() {
@@ -45,7 +87,7 @@ public class CreateEvent extends AppCompatActivity {
         timeButton = findViewById(R.id.timeButton);
         dateButton = findViewById(R.id.dateButton);
         authorEditText = findViewById(R.id.authorEditText);
-        cityEditText = findViewById(R.id.cityEditText);
+        cityText = findViewById(R.id.cityEditText);
         addressEditText = findViewById(R.id.addressEditText);
     }
 
@@ -53,6 +95,10 @@ public class CreateEvent extends AppCompatActivity {
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.eventTypes,android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         eventTypeSpinner.setAdapter(spinnerAdapter);
+
+        ArrayAdapter<String> cityAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, cities);
+
+        cityText.setAdapter(cityAdapter);
     }
 
     private void initialiseListeners() {
@@ -62,7 +108,7 @@ public class CreateEvent extends AppCompatActivity {
                     description = descriptionEditText.getText().toString(),
                     type = eventTypeSpinner.getSelectedItem().toString(),
                     author = authorEditText.getText().toString(),
-                    city = cityEditText.getText().toString(),
+                    city = cityText.getText().toString(),
                     address = addressEditText.getText().toString();
 
             //If the author input field is empty, set the author value to "anonymous author"
