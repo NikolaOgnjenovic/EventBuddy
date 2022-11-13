@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         swipeRefreshLayout = findViewById(R.id.refreshLayout);
         searchView = findViewById(R.id.searchView);
         eventTypeSpinner = findViewById(R.id.eventTypeSpinner);
+        initialiseSpinner();
     }
 
     private void initialiseAdapters() {
@@ -148,9 +149,6 @@ public class MainActivity extends AppCompatActivity {
         return filteredEvents;
     }
     private void loadDatabase() {
-        EventDatabase.loadEventList(() -> {
-            eventAdapter.notifyDataSetChanged();
-            initialiseSpinner();
-        });
+        EventDatabase.loadEventList(() -> eventAdapter.notifyDataSetChanged());
     }
 }

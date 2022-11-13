@@ -66,7 +66,7 @@ public class EventActivity extends AppCompatActivity {
 
     private void initialiseListeners() {
         backButton.setOnClickListener(v -> {
-            Intent intent = new Intent(this, MainActivity.class);
+             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         });
 

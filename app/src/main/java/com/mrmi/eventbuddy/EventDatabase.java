@@ -15,8 +15,9 @@ import java.util.Objects;
 
 public class EventDatabase {
 
-    private static DatabaseReference databaseReference = null;
+    private static DatabaseReference databaseReference;
     public static final List<Event> eventList = new ArrayList<>();
+    public static String databaseLink;
 
     public static void addEvent(Event event) {
         System.out.println("[MRMI]: EVENT DATABASE: ADDING EVENT");
@@ -92,8 +93,11 @@ public class EventDatabase {
     private static void initialiseDatabase() {
         if (databaseReference == null) {
             System.out.println("[MRMI]: EVENT DATABASE: INITIALISING DATABASE");
-            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://eventbuddy-bacb3-default-rtdb.europe-west1.firebasedatabase.app/");
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance(databaseLink);
             databaseReference = firebaseDatabase.getReference().child("Events");
+            System.out.println(databaseReference);
+        } else {
+            System.out.println("[MRMI]: Database reference is not null");
         }
     }
 }

@@ -3,6 +3,7 @@ package com.mrmi.eventbuddy;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -19,6 +20,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,7 +35,7 @@ public class CreateEvent extends AppCompatActivity {
     private UserDatabase userDatabase;
     private Toast toast;
     private Spinner eventTypeSpinner;
-    private List<String> cities = new ArrayList<>();
+    private final List<String> cities = new ArrayList<>();
     private AutoCompleteTextView cityText;
 
     @Override
@@ -70,7 +72,11 @@ public class CreateEvent extends AppCompatActivity {
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            json = new String(buffer, "UTF-8");
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                json = new String(buffer, StandardCharsets.UTF_8);
+            } else {
+                json = new String(buffer);
+            }
         } catch (IOException ex) {
             ex.printStackTrace();
             return null;
